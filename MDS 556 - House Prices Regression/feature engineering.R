@@ -14,11 +14,12 @@ sapply(data,function(x) sum(is.na(x)))
 
 ## Correlation Coefficients #####################
 ##library(help = "stats")
-plot(data$LotArea, data$SalePrice, col="red", xlab="Year Built", ylab="Sales Price", main="Pearson Correlation")
+plot(data$LotArea, data$SalePrice, col="red", xlab="Year Built", ylab="Sales Price", main="Sales Price and Lot Area")
 
 cor(x=data$LotArea, y = data$SalePrice, use="everything", method="pearson")
 ## 0.2638434
-## a lose positive correlation w/ LotArea & Sale Price as I would expect
+## a lose positive correlation w/ LotArea & Sale Price
+## Not linear 
 
 cor.test(x=data$LotArea, y =data$SalePrice)
 ## P value is very small so the null hypothese that the true correlation of 
@@ -116,7 +117,7 @@ data(iris)
 head(iris)
 train<-sample(1:150,75)
 library(MASS)
-lda_model <- lda(Species~., data=iris, subset=train)
+lda_model <- lda(SalePrice~., data=data, subset=data)
 lda_model$means
 
 ##Predictions on the test data

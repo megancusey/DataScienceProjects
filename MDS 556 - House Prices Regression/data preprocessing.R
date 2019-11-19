@@ -1,4 +1,22 @@
 rm(list = ls())
+splitData <- function(type, ratio, data){
+  library(caTools)
+  set.seed(100)
+  
+  
+  split <-sample.split(data$SalePrice, SplitRatio=ratio)
+  
+  if (type == "train") {
+    returnData = subset(data, split == TRUE)
+    
+  } else {
+    returnData = subset(data, split==FALSE)
+    
+  }
+  rm("split")
+  return (returnData)
+  
+}
 dataPreprocessing <- function(){
   setwd('C:/Users/cusey/source/repos/DataScienceProjects/MDS 556 - House Prices Regression')
   options(scipen = 999)
