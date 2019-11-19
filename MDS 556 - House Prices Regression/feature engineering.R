@@ -79,7 +79,7 @@ f
 
 library(caret)
 rfe_controller <- rfeControl(functions = lmFuncs, method="repeatedcv", repeats = 5, verbose = FALSE)
-size <- c(1:10)
+size <- c(1:12)
 
 ##names(reg.data) Help me find indices
 data("mtcars")
