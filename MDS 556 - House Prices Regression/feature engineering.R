@@ -1,138 +1,43 @@
 rm(list = ls())
 ## load in user defined functions.
+##backwardElimination <- function(x, sl) {
+
+##  numVars = length(x)
+##  for (i in c(1:numVars)){
+##    regressor = lm(formula = SalePrice ~ ., data = x)
+##    maxVar = max(coef(summary(regressor))[c(2:numVars), "Pr(>|t|)"])
+##    if (maxVar > sl){
+##      j = which(coef(summary(regressor))[c(2:numVars), "Pr(>|t|)"] == maxVar)
+##      x = x[, -j]
+##    }
+##    numVars = numVars - 1
+##  }
+##  return(summary(regressor))
+##}
 featureEngineering <- function(data){
 
 ## comment this code after I'm satisfied with 
 ## feature engineering portion
+  
 setwd('C:/Users/cusey/source/repos/DataScienceProjects/MDS 556 - House Prices Regression')
 source("data preprocessing.R", local = TRUE)
-data <- dataPreprocessing()
-sapply(data,function(x) sum(is.na(x)))
-## Feature Engineering
+x <- dataPreprocessing()
+sl <- .05
+##sapply(data,function(x) sum(is.na(x)))
 
-## 1st Method: Feature Filters
+## Backwards Elimination
+numVars = length(x)
 
-## Correlation Coefficients #####################
-##library(help = "stats")
-plot(data$LotArea, data$SalePrice, col="red", xlab="Year Built", ylab="Sales Price", main="Sales Price and Lot Area")
+for (i in c(1:numVars)){
+  regressor = lm(formula = SalePrice ~ ., data = x)
+  maxVar = max(coef(summary(regressor))[c(2:numVars), "Pr(>|t|)"])
+  if (maxVar > sl){
+    j = which(coef(summary(regressor))[c(2:numVars), "Pr(>|t|)"] == maxVar)
+    x = x[, -j]
+  }
+  numVars = numVars - 1
+  }
 
-cor(x=data$LotArea, y = data$SalePrice, use="everything", method="pearson")
-## 0.2638434
-## a lose positive correlation w/ LotArea & Sale Price
-## Not linear 
-
-cor.test(x=data$LotArea, y =data$SalePrice)
-## P value is very small so the null hypothese that the true correlation of 
-## is equal to zero can be rejected.
-
-## NOTE: Keep in mind to look at other correlation measures such as spearman or kendall
-pairs(data)
-##Error in plot.new() : figure margins too large
-
-## Mutual Information #######################
-
-## Calculates how important the inclusion/exclusion of
-## a variable is in predicting a correct class.
-
-## Compared to Correlation: not limited to linear dependencies,
-## uses probability distribution.
-
-##install.packages("FSelector")
-library(FSelector)
-##Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_231') # for 32-bit 
-ig_values <-information.gain(SalePrice~.,data)
-ig_values
-
-## filter top K features
-
-top_k_features <- cutoff.k(ig_values,2)
-f<- as.simple.formula(top_k_features,"SalePrice")
-f
-## SalePrice ~ Neighborhood + MSSubClass
-## Seems reasonable but I'm a bit skeptical when other
-## features are formatted in a way that makes sense to these algoithms.
-## Perhaps it doesn't matter as much if it's doing something similar to what
-## the decision tree does and just tries to select the variables that 'splits'
-## the dataset more clearly in regards to the target variable.
-
-## 2nd Method: Wrapper Method
-
-## errors below are for the reg.data... 
-## kept getting errors w/ reg data I think b/c
-## of some steps in my preprocessing data so I'll
-## have to go back to that... switched to mtcars
-## data set to keep going w/ assignment
-
-
-## Forward Selection
-## : Start w/ a feature set of one feature and sequentially
-##   add the next best feature & update the model to reveiew
-##   performance.
-
-## Backward Selection
-## : Reverse of Forward Method, start w/ all features and then
-##   remove least performing features one by one while updating
-##   the model.
-
-
-## Backward Selection
-
-library(caret)
-rfe_controller <- rfeControl(functions = lmFuncs, method="repeatedcv", repeats = 5, verbose = FALSE)
-size <- c(1:12)
-
-##names(reg.data) Help me find indices
-data("mtcars")
-lm_Profiler <- rfe(x=data[,1:12], y=data[,13], sizes=size,rfeControl = rfe_controller)
-lm_Profiler
-
-data[,1:12]
-data[,13]
-##Error in { : 
-##task 1 failed - "contrasts can be applied only to factors with 2 or more levels"
-lm_Profiler
-
-plot(lm_Profiler)
-
-## Feature Extraction or Construction
-range(data$LotArea)
-scale(data$LotArea)
-
-## Dimensionality Reduction
-##PCA
-## doesn't like my factors? Need to figure
-## out how to scale them.
-sale_price_features <- data[3:4]
-sale_price_target <- data[13]
-
-sale_price_pca <- prcomp(x=sale_price_features, scale. = T)
-biplot(sale_price_pca,scale = TRUE, pc.biplot = TRUE)
-
-##Linear Discriminant Analysis
-##LDA finds linear combinations of features
-##that also accounts for the classes of the data
-
-
-data(iris)
-head(iris)
-train<-sample(1:150,75)
-library(MASS)
-lda_model <- lda(SalePrice~., data=data, subset=data)
-lda_model$means
-
-##Predictions on the test data
-lda_pred <- predict(object=lda_model, newdata = iris[-train,])
-lda_pred$class
-iris_test <- iris[-train, ]
-library(ggplot2)
-ggplot() + geom_point(aes(lda_pred$x[,1], lda_pred$x[,2], colour = iris_test$Species, shape = iris_test$Species), 
-                      size = 2.5) + ggtitle("Linear Discriminant Analysis") + xlab("LDA1") + ylab("LDA2") + labs(fill = "Species")
-
-## Embedded Methods
-library(randomForest)
-mtcars.rf <- randomForest(mpg ~., data=mtcars, ntree=1000, keep.forest=FALSE, importance=TRUE)
-importance(mtcars.rf)
-importance(mtcars.rf, type=1)
-
-return (data)
 }
+
+summary(regressor)
