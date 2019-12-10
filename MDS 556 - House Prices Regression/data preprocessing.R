@@ -1,4 +1,20 @@
-rm(list = ls())
+##install.packages("knitr")
+library(knitr)
+library(ggplot2)
+library(plyr)
+library(dplyr)
+##install.packages("corrplot")
+library(corrplot)
+library(caret)
+library(gridExtra)
+library(scales)
+library(Rmisc)
+library(ggrepel)
+library(randomForest)
+library(psych)
+library(xgboost)
+
+##rm(list = ls())
 ## CALCULATE THE LOG LIKELIHOOD
 loglikelihood <- function(y,py) {
   pysmooth <- ifelse(py==0, 1e-12,
@@ -38,42 +54,35 @@ splitData <- function(type, ratio, data){
   return (returnData)
   
 }
-dataPreprocessing <- function(){
-  setwd('C:/Users/cusey/source/repos/DataScienceProjects/MDS 556 - House Prices Regression')
-  options(scipen = 999)
-  data <- read.csv(file='train.csv', header=TRUE)
-  
-  ## 1 - FEATURE: ID = REMOVE
+data_cleaner <- function(data_raw){
 
+  ## 1 - FEATURE: ID = REMOVE
+  drop <- c("Id")  
+  
   ## 2 - FEATURE: MSSUBCLASS
-  ## Decided not to turn to factor, exclude instead
-  ## these characteristics seem to be applied elsewhere in House Style and Building Type
-  ##  data$MSSubClass = factor(data$MSSubClass,
-  ##                         levels = c('20','30','40','45','50','60','70','75','80','85','90','120','150','160','180','190'),
-  ##                         labels = c('1-STORY 1946 & NEWER ALL STYLES',
-  ##                                    '1-STORY 1945 & OLDER',
-  ##                                    '1-STORY W/FINISHED ATTIC ALL AGES',
-  ##                                    '1-1/2 STORY - UNFINISHED ALL AGES',
-  ##                                    '1-1/2 STORY FINISHED ALL AGES',
-  ##                                    '2-STORY 1946 & NEWER',
-  ##                                    '2-STORY 1945 & OLDER',
-  ##                                    '2-1/2 STORY ALL AGES',
-  ##                                    'SPLIT OR MULTI-LEVEL',
-  ##                                    'SPLIT FOYER',
-  ##                                    'DUPLEX - ALL STYLES AND AGES',
-  ##                                    '1-STORY PUD (Planned Unit Development) - 1946 & NEWER',
-  ##                                    '1-1/2 STORY PUD - ALL AGES',
-  ##                                    '2-STORY PUD - 1946 & NEWER',
-  ##                                    'UD - MULTILEVEL - INCL SPLIT LEV/FOYER',
-  ##                                    '2 FAMILY CONVERSION - ALL STYLES AND AGES'))
+  data_raw$MSSubClass = factor(data_raw$MSSubClass,
+                           levels = c('20','30','40','45','50','60','70','75','80','85','90','120','150','160','180','190'),
+                           labels = c('1-STORY 1946 & NEWER ALL STYLES',
+                                      '1-STORY 1945 & OLDER',
+                                      '1-STORY W/FINISHED ATTIC ALL AGES',
+                                      '1-1/2 STORY - UNFINISHED ALL AGES',
+                                      '1-1/2 STORY FINISHED ALL AGES',
+                                      '2-STORY 1946 & NEWER',
+                                      '2-STORY 1945 & OLDER',
+                                      '2-1/2 STORY ALL AGES',
+                                      'SPLIT OR MULTI-LEVEL',
+                                      'SPLIT FOYER',
+                                      'DUPLEX - ALL STYLES AND AGES',
+                                      '1-STORY PUD (Planned Unit Development) - 1946 & NEWER',
+                                      '1-1/2 STORY PUD - ALL AGES',
+                                      '2-STORY PUD - 1946 & NEWER',
+                                      'UD - MULTILEVEL - INCL SPLIT LEV/FOYER',
+                                      '2 FAMILY CONVERSION - ALL STYLES AND AGES'))
   
   ## 3 - FEATURE: MSZONING, turn to factor
-  
-  ## DATA ISSUE 1: THERE ARE 10 ROWS THAT USE C (all) 
-  ## WHICH ISN'T IN THE DATA DICTIONARY.
   ## For now lets assume that C (all) is Commercial
   
-  data$MSZoning = factor(data$MSZoning,
+  data_raw$MSZoning = factor(data_raw$MSZoning,
                          levels = c(  'A'
                                       ,'C (all)'
                                       ,'FV'
@@ -93,38 +102,28 @@ dataPreprocessing <- function(){
                                      ,'Residential Medium Density'))
   
   
-  
-  ## 4 - FEATURE: LotFrontage, for now replace missing values w/ mean
-  data$LotFrontage = ifelse(is.na(data$LotFrontage),
-                            ave(data$LotFrontage, FUN = function(x) mean(x,na.rm=TRUE)),
-                            data$LotFrontage)
+  ## 4 - FEATURE: LotFrontage, for now replace with 0, no street connected to property
+  data_raw$LotFrontage[is.na(data_raw$LotFrontage)] <- 0
   
   ## 5 - FEATURE: LotArea, for now replace missing values w/ mean if any
-  data$LotArea = ifelse(is.na(data$LotArea),
-                        ave(data$LotArea, FUN = function(x) mean(x,na.rm=TRUE)),
-                        data$LotArea)
+  ## since LotArea could not be 0. There are no instances of this in the data
+  ## but in case they were, we'd catch it here.
+  data_raw$LotArea = ifelse(is.na(data_raw$LotArea),
+                        ave(data_raw$LotArea, FUN = function(x) mean(x,na.rm=TRUE)),
+                        data_raw$LotArea)
   
   ## 6 - FEATURE: STREET, turn to factor
-  data$Street = factor(data$Street,
+  data_raw$Street = factor(data_raw$Street,
                        levels = c(  'Grvl'
                                     ,'Pave'
                        ),
                        labels = c("Gravel","Paved"))
   
   ## 7 - FEATURE: Alley - Lets change this just to indicate if there is an alley or not
-  
-  data$Alley = +(!is.na(data$Alley))
-##  data$Alley = factor(data$Alley,
-##                      levels = c(   'Grvl'
-##                                    ,'Pave'
-##                                    ,'Not Applicable'
-##                      ),
-##                      labels = c("Gravel","Paved","Not Applicable"))
-  
-##  data$Alley[is.na(data$Alley)] <- "Not Applicable"  
+  data_raw$Alley = +(!is.na(data_raw$Alley))
   
   ## 8 - FEATURE: LotShape, turn to factor
-  data$LotShape = factor(data$LotShape,
+  data_raw$LotShape = factor(data_raw$LotShape,
                          levels = c(    'Reg'
                                         ,'IR1'
                                         ,'IR2'
@@ -136,7 +135,7 @@ dataPreprocessing <- function(){
                                      ,"Irregular"))
 
   ## 9 - FEATURE: LandContour, turn to factor
-  data$LandContour = factor(data$LandContour,
+  data_raw$LandContour = factor(data_raw$LandContour,
                                 levels = c(    'Lvl'
                                                ,'Bnk'
                                                ,'HLS'
@@ -146,9 +145,9 @@ dataPreprocessing <- function(){
                                            ,"Banked"
                                            ,"Hillside"
                                            ,"Low"))
-  
+  sapply(data_raw,function(x) sum(is.na(x)))
   ## 10 - FEATURE: Utilities, turn to factor
-  data$Utilities = factor(data$Utilities,
+  data_raw$Utilities = factor(data_raw$Utilities,
                               levels = c('AllPub',
                                          'NoSewr',
                                          'NoSeWa',
@@ -160,7 +159,7 @@ dataPreprocessing <- function(){
                                          ,"Electricity Only"))
   
   ## 11 - FEATURE: LotConfig, turn to factor
-  data$LotConfig = factor(data$LotConfig,
+  data_raw$LotConfig = factor(data_raw$LotConfig,
                               levels = c('Inside',
                                          'Corner',
                                          'CulDSac',
@@ -174,7 +173,7 @@ dataPreprocessing <- function(){
                                          ,"Frontage on 3 sides of property"))
   
   ## 12 - FEATURE: LandSlope, turn to factor
-  data$LandSlope = factor(data$LandSlope,
+  data_raw$LandSlope = factor(data_raw$LandSlope,
                               levels = c('Gtl',
                                          'Mod',
                                          'Sev'
@@ -185,7 +184,7 @@ dataPreprocessing <- function(){
                               )
 
   ## 13 - FEATURE: Neighborhood, turn to factor
-  data$Neighborhood = factor(data$Neighborhood,
+  data_raw$Neighborhood = factor(data_raw$Neighborhood,
                                  levels = c('Blmngtn',
                                             'Blueste',
                                             'BrDale',
@@ -240,8 +239,8 @@ dataPreprocessing <- function(){
                                            ,"Veenker"
                                            ,"Other")
                              )
-  data$Neighborhood[is.na(data$Neighborhood)] <- "Other"
-  
+  data_raw$Neighborhood[is.na(data_raw$Neighborhood)] <- "Other"
+
   #14 & #15 Condition1 and Condition2
   ## Artial Street = Highway
   ## Feeder Street = Important Road that feeds into high traffic area
@@ -252,42 +251,20 @@ dataPreprocessing <- function(){
   ##          ByPositiveFeature
   ## Normal I Think would be a duplicate dummy variable.
   RR_List = c("RRNn","RRAn","RRNe", "RRAe")
-  data$ByRR <- +(data$Condition1 %in% RR_List | data$Condition2 %in% RR_List)
+  data_raw$ByRR <- +(data_raw$Condition1 %in% RR_List | data_raw$Condition2 %in% RR_List)
   rm("RR_List")
-  data$ByHWY = +(data$Condition1 == "Artery" | data$Condition2 == "Artery")
+  data_raw$ByHWY = +(data_raw$Condition1 == "Artery" | data_raw$Condition2 == "Artery")
   
-  data$ByFeeder = +(data$Condition1 == "Feedr" | data$Condition2 == "Feedr")
+  data_raw$ByFeeder = +(data_raw$Condition1 == "Feedr" | data_raw$Condition2 == "Feedr")
   
-  data$ByPositiveFeature = +(data$Condition1 == "PosN" | data$Condition2 == "PosN")  
+  data_raw$ByPositiveFeature = +(data_raw$Condition1 == "PosN" | data_raw$Condition2 == "PosN")  
   
-  ##data$Condition1 = factor(data$Condition1,
-  ##                           levels = c('Artery',
-  ##                                      'Feedr',
-  ##                                      'Norm',
-  ##                                      'RRNn',
-  ##                                      'RRAn',
-  ##                                      'PosN',
-  ##                                      'PosA',
-  ##                                      'RRNe',
-  ##                                      'RRAe'
-  ##                           ),
-  ##                           labels = c(  "Adjacent to Arterial Street"
-  ##                                       ,"Adjacent to Feeder Street"
-  ##                                       ,"Normal"
-  ##                                       ,"Within 200' of North-South RR"
-  ##                                       ,"Adjacent to North-South RR"
-  ##                                       ,"Near Positive Off-Site Feature"
-  ##                                       ,"Adjacent to Positive Off-Site Feature"
-  ##                                       ,"Within 200' of East-West RR"
-  ##                                       ,"Adjacent to East-West RR"
-  ##                                      )
-  ##                    )                         
+  drop <- c(drop,"Condition1","Condition2")  
   ## Remove Condition1 and Condition2
-  ##data = subset(data, select= -c(Condition1,Condition2))
-  
+
   ## FEATURE 16 BldgType = Type of Dwelling
   ## Maybe combine townhouse factor
-  data$BldgType = factor(data$BldgType,
+  data_raw$BldgType = factor(data_raw$BldgType,
                           levels = c('1Fam',
                                      '2FmCon',
                                      'Duplx',
@@ -300,6 +277,14 @@ dataPreprocessing <- function(){
                                       ,"Townhouse End Unit"
                                       ,"Townhouse Inside Unit")
                        )
+  
+  ggplot(data[!is.na(data$SalePrice),], aes(x=as.factor(BldgType), y=SalePrice)) +
+    geom_bar(stat='summary', fun.y = "median", fill='blue')+
+    scale_y_continuous(breaks= seq(0, 800000, by=100000), labels = comma) +
+    geom_label(stat = "count", aes(label = ..count.., y = ..count..))
+  
+  
+  sapply(data_raw,function(x) sum(is.na(x)))
   ## FEATURE 17 HouseStyle = Style of dwelling
   ## Thinking about doing story as numeric
   ## Finished as boolean
@@ -308,7 +293,7 @@ dataPreprocessing <- function(){
   ## If Split Foyer/Level - what is the # of stories?
   ## Factor for now
   ## What to do with unknown values?
-  data$HouseStyle = factor(data$HouseStyle,
+  data_raw$HouseStyle = factor(data_raw$HouseStyle,
                          levels = c('1Story',
                                     '1.5Unf',
                                     '2Story',
@@ -327,10 +312,55 @@ dataPreprocessing <- function(){
                   )
   
   ## FEATURE 18 OverallQuality = Rates the overall material and finish of house
-  ## Order matters here - Ordinal data... how to handle?
-
+  ## Order matters here - Ordinal data... add ordered = TRUE param
+  data_raw$OverallQual = factor(data_raw$OverallQual, ordered = TRUE,
+                           levels = c('10',
+                                      '9',
+                                      '8',
+                                      '7',
+                                      '6',
+                                      '5',
+                                      '4',
+                                      '3',
+                                      '2',
+                                      '1'
+                           ),
+                           labels = c(   "Very Excellent"
+                                         ,"Excellent"
+                                         ,"Very Good"
+                                         ,"Good"
+                                         ,"Above Average"
+                                         ,"Average"
+                                         ,"Below Average"
+                                         ,"Fair"
+                                         ,"Poor"
+                                         ,"Very Poor")
+  )
   ## FEATURE 19 OverallCond = Rates the overall condition of the house
-  ## Order matters here - Ordinal data... how to handle?
+  ## Order matters here - Ordinal data... add ordered = true param
+  data_raw$OverallCond = factor(data_raw$OverallCond, ordered = TRUE,
+                            levels = c('10',
+                                       '9',
+                                       '8',
+                                       '7',
+                                       '6',
+                                       '5',
+                                       '4',
+                                       '3',
+                                       '2',
+                                       '1'
+                            ),
+                            labels = c(   "Very Excellent",
+                                          "Excellent",
+                                          "Very Good"
+                                          ,"Good"
+                                          ,"Above Average"
+                                          ,"Average"
+                                          ,"Below Average"
+                                          ,"Fair"
+                                          ,"Poor"
+                                          ,"Very Poor")
+  )
   
   ## FEATURE 20 YearBuilt: Original construction date
   
@@ -338,31 +368,236 @@ dataPreprocessing <- function(){
   ## if no remodeling or additons)
   ## Duplicate info... maybe turn into boolean
   
-  data$Remodeled <- +(data$YearRemodAdd != data$YearBuilt)
+  data_raw$Remodeled <- +(data_raw$YearRemodAdd != data_raw$YearBuilt)
   
-  ##data<- data[,c(2:13,80:85)]
-  data <- data[c(##"MSSubClass",
-                 "MSZoning"
-                ,"LotFrontage"
-                ,"LotArea"
-                ,"Street"
-                ,"Alley"
-                ,"LotShape"
-                ,"LandContour"
-                ,"Utilities"
-                ,"LotConfig"
-                ,"LandSlope"
-                ,"Neighborhood"
-                ,"ByPositiveFeature"
-                ,"ByFeeder"
-                ,"ByHWY"
-                ,"ByRR"
-  ##              ,"BldgType"
-  ##              ,"HouseStyle"
-                ,"SalePrice"
-                ,"OverallQual"
-                ,"OverallCond"
-                ,"YearBuilt"
-                ,"Remodeled")]
+  ## FEATURE 22: ROOFSTYLE:
+  data_raw$RoofStyle = factor(data_raw$RoofStyle,
+                         levels = c('Flat',
+                                    'Gable',
+                                    'Gambrel',
+                                    'Hip',
+                                    'Mansard',
+                                    'Shed'
+                         ),
+                         labels = c(  "Float"
+                                      ,"Gable"
+                                      ,"Gable-Barn"
+                                      ,"Hip"
+                                      ,"Mansard"
+                                      ,"Shed")
+  )
+  
+  ## FEATURE 22: Foot Material:
+  data_raw$RoofMatl = factor(data_raw$RoofMatl,
+                          levels = c('ClyTile',
+                                     'CompShg',
+                                     'Membran',
+                                     'Metal',
+                                     'Roll',
+                                     'Tar&Grv',
+                                     'WdShake',
+                                     'WdShngl'
+                          ),
+                          labels = c(  "Clay or Tile"
+                                       ,"Standard (Composite) Shingle"
+                                       ,"Membrane"
+                                       ,"Metal"
+                                       ,"Roll"
+                                       ,"Gravel & Tar"
+                                       ,"Wood Shakes"
+                                       ,"Wood Shingles")
+  )
+
+  ## FEATURE 23 & 24 Exterior1st/Exterior2nd - Exterior Covering on House
+  ## Start by splitting into separate columns I suppose.
+  ## Take the most popular 5 Exterior Material, Put the rest into "Other" Category
+  ## VinylSd, HdBoard, MetalSd, Wd Sdng, Plywood
+  barplot(tail(sort(table(data$Exterior1st)),5))
+  ##summary(data$Exterior1st)
+  ##barplot(tail(sort(table(data$Exterior2nd)),5))
+  ##summary(data$Exterior2nd)
+  
+  data$Exterior = ifelse(
+                    data$Exterior1st == "VinylSd" | 
+                    data$Exterior2nd == "VinylSd",
+                        "Vinyl",
+                  ifelse(
+                    data$Exterior1st == "HdBoard" |
+                    data$Exterior2nd == "HdBoard",
+                        "Hard Board",
+                  ifelse(
+                    data$Exterior1st == "MetalSd" |
+                    data$Exterior2nd == "MetalSd",
+                        "Metal",
+                  ifelse(
+                    data$Exterior1st == "Wd Sdng" |
+                    data$Exterior2nd == "Wd Sdng",
+                      "Wood Siding",
+                  ifelse(
+                    data$Exterior1st == "Plywood" |
+                    data$Exterior2nd == "Plywood",
+                      "Plywood","Other"
+                  )))))
+  
+  data$Exterior <- factor(data$Exterior,
+                          levels = c('Vinyl',
+                                     'Hard Board',
+                                     'Metal',
+                                     'Wood Siding',
+                                     'Plywood',
+                                     'Other'
+                            )
+                        )
+  
+  drop <- c(drop, "Exterior1st","Exterior2nd")
+  
+  ## FEATURE 25 MsnVnrType: Mason Veneer Type
+  ## What is this? On the exterior of the home to add curb
+  ## appeal - (example, half brink on the exterior of a home)
+  ## I would assume if a house has one or not plays more into the 
+  ## values of the home versus what it's made of/sq ft.
+
+  data$HasMasonVeneer = +(data$MasVnrType != "None")
+  data$HasMasonVeneer <- +(!is.na(data$HasMasonVeneer))
+  
+  drop <- c(drop, "MasVnrType","MasVnrArea")
+  
+  ## FEATURE 26: Exterior Quality  
+  data$ExterQual <- factor(data$ExterQual, ordered=TRUE,
+                          levels = c("Fa",
+                                     "TA",
+                                     "Gd",
+                                     "Ex"
+                                     ##'Po', No Poor
+                            ),
+                          labels = c("Fair",
+                                     "Average",
+                                     "Good",
+                                     "Excellent")
+  )
+  ## FEATURE 26: Exterior Quality  
+  data$ExterCond <- factor(data$ExterCond, ordered=TRUE,
+                           levels = c("Po",
+                                      "Fa",
+                                      "TA",
+                                      "Gd",
+                                      'Ex'
+                           ),
+                           labels = c("Poor",
+                                      "Fair",
+                                      "Average",
+                                      "Good",
+                                      "Excellent"
+                                    )
+                    )
+  drop <- c(drop,"ExterCond","RoofMatl") ## TEST
+  ## FEATURE 27: Foundation: Type of Foundation - OK, will
+  ## revisit the factors/labels in feature engineering
+  summary(data$Foundation)
+  
+  
+  ## BASEMENT - FOR NOW, LETS JUST CAPTURE IF THE HOUSE HAS
+  ## A BASEMENT.
+  data$HasBasement <- +(data$BsmtQual != "NA")
+  data$HasBasement <- +(!is.na(data$HasBasement))  
+  ## Feature 28: BsmtQual - Basement Quality- REMOVE
+
+  ## Feature 29: BsmtCond - Evaluates the general condition of the
+  ## basement - Remove
+  
+  ## Feature 30: BsmtExposure: Refers to walkout or garden level walls
+  ## Remove
+  
+  ## Feature 31: BsmtFinType1: Rating of basement Finished Area - Remove
+  
+  ## Feature 32: BsmtFinSF1: Type 1 finished square feet - Remove
+  
+  ## Feature 33: BsmtFinType2: Rating of basement finished area 
+  ##  if multiple types - Remove
+  
+  ## Feature 34: BsmtFinSF2: Type 2 Finished square feet - Remove
+  
+  ## Feature 35: BsmtUnfSF: Unfinished Square Feet of Basement Area - Remove
+
+  ## Feature 36: TotalBsmtSF - Total sq ft of basement: This might be a better
+  ## choice than a binary, but removing for now.
+  
+   drop <- c(drop, "BsmtQual","BsmtCond", "BsmtExposure"
+            ,"BsmtFinType1","BsmtFinSF1","BsmtFinType2"
+            ,"BsmtFinSF2", "BsmtUnfSF","TotalBsmtSF")
+
+  ## FEATURE 37: Heating
+  ## Feature 38: HeatinQC
+  ## Feature 39: CentralAir
+  ## Feature 40: Electrical
+  ## Feature 41: 1stFlrSF - not a factor
+  ## Feature 42: 2ndFlrSF - not a factor
+  ## Feature 43: LowQualFinSF ?? What, removed
+  ## Feature 44: GrLivArea -remove
+  ## Feature 45: BsmtFullBath - removed
+  ## Feature 46: BsmtHalfBath - removed 
+  ## Feature 47: Full Bath - above grade
+  ## Feature 48: Half Bath - above grade
+  ## Feature 49: Bedroom - above grade 
+  ## Feature 50: Kitchens above grade
+  ## Feature 51: KitchenQual 
+  ## Feature 52: TotRmsAbvGrd
+  ## Feature 53: Functional
+  ## Feature 54: Fireplaces - # of fireplaces
+  ## Feature 55: FirplaceQu - Fireplace quality
+   drop <- c(drop, "Heating","HeatinQC", "CentralAir"
+             ,"Electrical","LowQualFinSF","GrLivArea"
+             ,"BsmtFullBath", "BsmtHalfBath","KitchenQual"
+             ,"Functional","FireplaceQu","BldgType","HouseStyle")   
+  ## GARAGE: Lets indicate if there is a garage and 
+  ## figure out how to incorporate other features later 
+  ##data$HasGarage <- +(data$GarageQual != "NA")
+  ## Feature 56: GarageType - Type of Garage 
+  ## Feature 56: GarageYrBlt - Year garage was built 
+  ## Feature 57: GarageFinish: Interior finish of garage 
+  ## Feature 58: GarageCars: Size of garage in car captacity
+  ## Feautre 59: GarageArea
+  ## Feature 60: GarageQual
+  ## Feature 61: GarageCond
+    data$HasGarage <- ifelse(data$GarageQual != "NA", TRUE,FALSE)
+    data$HasGarage <- +(!is.na(data$HasGarage))
+
+  summary(data$HasGarage)
+  drop <- c(drop,"GarageType","GarageYrBlt","GarageFinish"
+             ,"GarageCars","GarageArea", "GarageQual","GarageCond")
+  
+  ## Feature 62: PavedDrive
+  ## Feature 63: WoodDeckSF
+  ## Feature 64: OpenPorchSF   
+  ## Feature 65: EnclosedPorch
+  ## Feature 66: 3SsnPorch
+  ## Feature 67: ScreenPorch
+
+  drop <- c(drop,"PavedDrive","WoodDeckSF","OpenPorchSF",   
+            "EnclosedPorch","3SsnPorch","ScreenPorch")
+     
+  ## POOL: Lets indicate if there is a garage and 
+  ## figure out how to incorporate other features later 
+  
+  ## data$HasPool <- +(data$PoolQC != "NA")
+   
+  ## Feature 68: PoolArea
+  ## Feature 69: PoolQC
+  
+  drop <- c(drop,"PoolArea","PoolQC")
+  
+  ## Feature 70: Fence
+  ## Feature 71: MiscFeature  
+  ## Feature 72: MiscVal
+  ## Feature 73: MoSold
+  ## Feature 74: YrSold
+  ## Feature 75: SaleType
+  ## Feature 76: SaleCondition 
+  
+  drop <-c(drop,"Fence","MiscFeature","MiscVal",
+           "SaleType","SaleCondition")
+  
+  data <- data[ , !(names(data) %in% drop)]
+  
   return (data)
 }
