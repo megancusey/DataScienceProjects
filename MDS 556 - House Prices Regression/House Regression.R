@@ -1,7 +1,8 @@
 rm(list = ls())
 setwd('C:/Users/cusey/source/repos/DataScienceProjects/MDS 556 - House Prices Regression')
 
-## data preprocessing
+## SECTION 1 - data preprocessing
+## OBJECTIVE - clean each feature according to data definitions
 source("data preprocessing.R", local = TRUE)
 setwd('C:/Users/cusey/source/repos/DataScienceProjects/MDS 556 - House Prices Regression')
 options(scipen = 999)
@@ -9,13 +10,14 @@ options(scipen = 999)
 data <- read.csv(file='train.csv', header=TRUE, stringsAsFactors = FALSE)
 data_raw <- data
 
-## DATA EXPLORATION
-
 ## cleaner - apply validations according to data definitions
 data_clean <- data_cleaner(data_raw)
+data <- data_clean
+sapply(data_clean,function(x) sum(is.na(x)))
+## No missing values
 
 
-## data exploration
+## DATA EXPLORATION - See Data Exploration.R
 
 plot(data$MSSubClass)
 hist(data$MSSubClass)
