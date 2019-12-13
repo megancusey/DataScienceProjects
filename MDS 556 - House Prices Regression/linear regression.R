@@ -1,20 +1,17 @@
-rm(list = ls())
-setwd('C:/Users/cusey/source/repos/DataScienceProjects/MDS 556 - House Prices Regression')
 
-## load in user defined functions.
 linearRegression <- function(data){
   
-source("data preprocessing.R", local = TRUE)
-data <- dataPreprocessing()
+##source("data preprocessing.R", local = TRUE)
+##data <- dataPreprocessing()
 
-train <- splitData("train",.8,data)
-test <- splitData("test",.8,data)
+##train <- splitData("train",.8,data)
+##test <- splitData("test",.8,data)
 
 ## FITTING MULTIPLE LINEAR REGRESSION TO THE TRAINING SET
-regressor = lm(formula = SalePrice ~ .,
-               data = train)
+regressor = lm(formula = Target ~ .,
+               data = data)
 
-summary(regressor)
+##summary(regressor)
 ## R Creates Dummy variables for the categorical variables which is 
 ## clearly too much.
 
@@ -28,28 +25,28 @@ summary(regressor)
 ## According to the F statistic, the model does better than a constant model.
 
 ## CREATE COLUMN W/ PREDICTION VALUES AGAINST TEST SET
-test$predSalePrice <- predict(regressor, newdata=test)
+##test$predSalePrice <- predict(regressor, newdata=test)
 
 ## CREATE COLUMN W/ PREDICTION VALUES AGAINST TRAIN SET
-train$predSalePrice <- predict(regressor, newdata=train)
+##train$predSalePrice <- predict(regressor, newdata=train)
 
 ## Multiple R-Squared suggests we've explained .6623 of the Y variable (Sale Price)
 
 ## filter top K features
 
-top_k_features <- cutoff.k(ig_values,2)
-f<- as.simple.formula(top_k_features,"SalePrice")
-f
+##top_k_features <- cutoff.k(ig_values,2)
+##f<- as.simple.formula(top_k_features,"SalePrice")
+##f
 ## SalePrice ~ Neighborhood + MSSubClass
 ## rerun with less dimensions
 ## FITTING MULTIPLE LINEAR REGRESSION TO THE TRAINING SET
-regressor2 = lm(formula = f,
-               data = train)
+##regressor2 = lm(formula = f,
+##               data = train)
 
-summary(regressor2)
+##summary(regressor2)
 
 ## R-Squared is now .6157 so we took away a lot of dimensions and didn't loose much of
 ## the variation explained for SalePrice.
 
-
+return (summary(regressor))
 }
