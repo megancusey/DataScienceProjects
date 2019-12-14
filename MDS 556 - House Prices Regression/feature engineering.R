@@ -4,26 +4,27 @@ RFE <- function(data, sl) {
   set.seed(7)
   
   data_feature_selection <- data
-  
+  x <- grep("Target", names(data_feature_selection))
+  z <- x-1
   # load the library
   #installed.packages("mlbench")
   library(mlbench)
   library(caret)
   
-  control <- rfeControl(functions=rfFuncs, method="cv", number=10)
-  results <- rfe(data_feature_selection[,1:66], data_feature_selection[,67], sizes=c(1:10), rfeControl=control)
-
-  ##print(results)  
-  # summarize the results
-  ##optVars <- head(results$optVariables,5)
-
-  ##optVars <- c(optVars,"Target")
   
-  ##summary(results)
+  
+  control <- rfeControl(functions=rfFuncs, method="cv", number=10)
+  results <- rfe(data_feature_selection[,1:z], data_feature_selection[,x], sizes=c(1:10), rfeControl=control)
+
+  print(results)  
+  # summarize the results
+  summary(results)
+  
   # list the chosen features
-  ##predictors(results)
+  predictors(results)
+  
   # plot the results
-  ##plot(results, type=c("g", "o"))
+  plot(results, type=c("g", "o"))
 
 
   return(results$optVariables)
@@ -111,6 +112,15 @@ categorical_Variables <- function(data_v1){
   
   summary(data_v1$SalePrice)
  
+
+  ggplot(data[!is.na(data_v1$SalePrice),], aes(x=reorder(MSSubClass, SalePrice, FUN=mean), y=SalePrice)) +
+    geom_bar(stat="summary", fun.y="median", fill="red") +
+    scale_y_continuous(breaks=seq(0,800000, by=50000), labels=comma) +
+    geom_label(stat="count", aes(label= ..count.., y=..count..), size=3) + 
+    geom_hline(yintercept=214000, linetype="dashed", color="black")
+  
+  
+  
   ggplot(data[!is.na(data_v1$SalePrice),], aes(x=reorder(Neighborhood, SalePrice, FUN=mean), y=SalePrice)) +
     geom_bar(stat="summary", fun.y="median", fill="red") +
     scale_y_continuous(breaks=seq(0,800000, by=50000), labels=comma) +
@@ -210,6 +220,20 @@ categorical_Variables <- function(data_v1){
   
   data_v1$ExterQual <- NULL
   
+  x<-which(data_v1$HouseStyle == "Split Foyer" | data_v1$HouseStyle == "Split Level")
+  data_v1[x,"MSSubClass"]
+  
+  data_v1$NumOfFloors <- ifelse(data_v1$HouseStyle == "1 Story",1,
+                            ifelse(data_v1$HouseStyle == "1.5 Story Finished" | data_v1$HouseStyle == "1.5 Story Unfinished",1.5,
+                               ifelse(data_v1$HouseStyle == "2 Story",2,
+                                 ifelse(data_v1$HouseStyle == "2.5 Finished" | data_v1$HouseStyle == "2.5 Unfinished" ,2.5,1
+                                      ))))
+  data_v1$Split <- +(data_v1$HouseStyle == "Split Foyer" | data_v1$HouseStyle =="Split Level")
+
+  
+  data_v1$HouseStyle <- NULL
+  data_v1$MSSubClass <- NULL
+    
   return(data_v1)
 }
 
@@ -232,13 +256,3 @@ splitData <- function(type, ratio, data){
   return (returnData)
   
 }
-
-##PCA <- function(data) {
-##  library(caret)
-##  library(e1071)
-  
-##  na.action(na.omit(data))
-##  pca2 = prcomp(data)
-##  summary(pca)
-  
-##}

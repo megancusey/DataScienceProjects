@@ -1,50 +1,92 @@
-rm(list = ls())
-setwd('C:/Users/cusey/source/repos/DataScienceProjects/MDS 556 - House Prices Regression')
+accuracyMeasures <- function(pred, truth, name="model", prob){
+  library(caret)
+  ## Normalizethe deviance by th number of data points so we can compare the deviance
+  ## across the test and training sets
+  dev.norm <- -2*loglikelihood(as.numeric(truth),pred)/length(pred)
+  ## Convert the class probability estimator into a classifer 
+  ## by labeling documents that score greater than .5 as spam.
+  ctable <- table(truth=truth,
+                  pred=(pred > prob))
+  accuracy <- sum(diag(ctable))/sum(ctable)
+  precision <- precision(ctable)
+  recall <-recall(ctable)
+  f1 <- precision*recall
+  data.frame(model=name, accuracy=accuracy, f1=f1, precision=precision,recall=recall, dev.norm)
+}
+## CALCULATE THE LOG LIKELIHOOD
+loglikelihood <- function(y,py) {
+  pysmooth <- ifelse(py==0, 1e-12,
+                     ifelse(py==1,1-1e-12,py))
+  
+  sum(y*log(pysmooth) + (1-y)*log(1-pysmooth))
+}
 
-## data preprocessing
-source("data preprocessing.R", local = TRUE)
-data <- dataPreprocessing()
+data <- data_FS
+summary(data$Target)
 
-summary(data$SalePrice)
 ## 214000 represents the 3rd quartile/75%
 ## if the sale price is projected to be top dollar, then it's above 214000
 
-data$HighDollar <- ifelse(data$SalePrice >= 214000,"yes","no")
+data$HighDollar <- ifelse(data$Target >= 214000,"yes","no")
 data$HighDollar <- factor(data$HighDollar)
 
 split <- .8 
 train <- splitData("train", split ,data)
 test <- splitData("test", split,data)
 
-data <- subset(data, select =-c(SalePrice))
-test <- subset(test, select =-c(SalePrice))
-train <- subset(train, select =-c(SalePrice))
+data <- subset(data, select =-c(Target))
+test <- subset(test, select =-c(Target))
+train <- subset(train, select =-c(Target))
 
 houseVars <- setdiff(colnames(data), list("rgroup","HighDollar"))
 houseVars
 
-## USE ALL THE FEATURES AND DO BINARY CLASSIFICATION WHERE TRUE = SPAM DOCUMENTS
-houseFormula <- as.formula(paste('HighDollar=="yes"',
-                                paste(houseVars,collapse=" + "),sep=" ~ "))
+## USE ALL THE FEATURES AND DO BINARY CLASSIFICATION WHERE TRUE = HIGH DOLLAR HOME
+houseFormula <- as.formula(paste('HighDollar=="yes"', paste(houseVars,collapse=" + "),sep=" ~ "))
 
 library(rpart)
+library(rpart.plot)
+library(RColorBrewer)
+library(rattle)
 
 ## Fit decision tree model using rpart library
 treemodel <- rpart(houseFormula, train)
+rpart.plot(treemodel)
+treemodel
 
-accuracyMeasures(predict(treemodel, newdata=train), 
-                 train$HighDollar=="yes",
-                 name="tree, training")
+pred_decision <- predict(treemodel, newdata=train)
+y_pred_decision = ifelse(pred_decision > .75, "yes","no")
+y_pred_decision
+
+## Making the Confusion Matrix
+cm_decision = table(y_pred_decision,train$HighDollar)
+cm_decision
+
+precision(cm_decision)
+recall(cm_decision)
+accuracyMeasures(predict(treemodel, newdata=train), train$HighDollar=="yes",  name="tree, training",.75)
+## FROM PREVIOUS ASSIGNMENT w/o FE
 ##           model  accuracy        f1 dev.norm
 ## 1 tree, training 0.9085851 0.6656575 0.476685
 
+## W/ Feature Engineering
+## 1 tree, training 0.9203822 0.7096442 0.4059239
 accuracyMeasures(predict(treemodel, newdata=test), 
                  test$HighDollar=="yes",
-                 name="tree, test")
+                 name="tree, test",.75)
 
 ##        model  accuracy        f1 dev.norm
 ## 1 tree, test 0.8861386 0.3043478 0.634403
+## w/ fe
+## 1 tree, test 0.9257426 0.5157143 0.3980521
 
+pred_decision_test <- predict(treemodel, newdata=test)
+y_pred_decision_test = ifelse(pred_decision_test > .75, "yes","no")
+cm_decision_test = table(y_pred_decision_test,test$HighDollar)
+cm_decision_test
+precision(cm_decision_test)
+recall(cm_decision_test)
+length(which(test$HighDollar=="yes"))
 
 ## Use bootstrap samples that are the same size as the training set, with 100 trees.
 ntrain <- dim(train)[1] ## returns # of rows in train (1258)
@@ -80,33 +122,61 @@ predict.bag <- function(treelist, newdata){
   predsums <- rowSums(preds)
   predsums/length(treelist)
 }
+treelist
+pred_bag <- predict.bag(treelist, newdata=train)
+y_pred_bag = ifelse(pred_bag > .75, "yes","no")
+y_pred_bag
 
+
+plot( treelist )
+text( tree.carseats , pretty =0)
+
+## Making the Confusion Matrix
+cm_bag = table(y_pred_bag,train$HighDollar)
+cm_bag
+library(caret)
+precision(cm_bag)
+##[1] 0.9858233
+recall(cm_bag)
+##[1] 0.9159068
 accuracyMeasures(predict.bag(treelist, newdata=train),
                  train$HighDollar=="yes",
-                 name="baggin, training")
+                 name="baggin, training",.75)
 
 accuracyMeasures(predict.bag(treelist, newdata=test),
                  test$HighDollar=="yes",
-                 name="bagging, test")
+                 name="bagging, test",.75)
+pred_bag_test <- predict.bag(treelist, newdata=test)
+y_pred_bag_test = ifelse(pred_bag_test > .75, "yes","no")
+y_pred_bag_test
 
+cm_bag_test = table(y_pred_bag_test,test$HighDollar)
+cm_bag_test
+library(caret)
+precision(cm_bag_test)
+##[1] 0.9858233
+recall(cm_bag_test)
+##[1] 0.9159068
 
+library(ipred)
+library(MASS)
+bagging(HighDollar~.,data=train, coob=TRUE)
 library(randomForest)
 
 set.seed(5123512)
-
+f <- randomForest(x=data[1:1458,-9], y=data$HighDollar[1:1458], ntree=100,importance=TRUE)
 fmodel <- randomForest(x=train[,houseVars], ## independent variables
                        y=train$HighDollar, ## dependent variable
                        ntree = 100, ## default = 500 but want 100 to compare to bagging example
-                       nodesize=7, ## specifies that each node of a tree must have a min of 7 features
+                       nodesize=5, ## specifies that each node of a tree must have a min of 7 features
                        importance=T) ## tells function to save information for calculating variable importance
 
-predict(fmodel,
-        newdata=train[,houseVars], type='prob')[,'HighDollar']
+predict(f,newdata=train[,houseVars],type="prob")[,"HighDollar"]
 
-accuracyMeasures(predict(fmodel,
-                         newdata=train[,houseVars], type='prob')[,'HighDollar'],
+accuracyMeasures(predict(f,newdata=train[,houseVars],type="prob")[,"HighDollar"],
                  train$HighDollar=="yes", name="random forest, train")
-
+names(train)
+houseVars
 ##Error in predict(fmodel, newdata = train[, houseVars], type = "prob")[,  : 
 ##   subscript out of bounds
 
@@ -126,7 +196,7 @@ accuracyMeasures(predict(fmodel,
 varImp <- importance(fmodel)
 ## importance returns a matrix of importance measures.
 ## the larger the value, the more important the feature is
-varImp[1:10,]
+varImp
 
 varImpPlot(fmodel, type=1)
 
@@ -139,3 +209,11 @@ varImpPlot(fmodel, type=1)
 ## TRAIN  .9340223  .7616366  .378156
 ## TEST   .8712871  .2692308  .5006863
 
+## w/ FEATURE ENGINEERING
+##        ACCURACY   F1       DEV.NORM 
+## DECISION TREE      
+## TRAIN  0.9203822 0.7096442 0.4059239
+## TEST   0.9257426 0.5157143 0.3980521
+## BAGGING  
+## TRAIN  0.933121 0.7601384 0.3156886
+## TEST   0.9306931 0.5494505 0.3063632

@@ -55,6 +55,7 @@ numeric_correlation_plot <- function(data) {
   CorHigh <- names(which(apply(cor_sorted, 1, function(x) abs(x)>0.5)))
   cor_numVar <- cor_numVar[CorHigh, CorHigh]
   corrplot.mixed(cor_numVar, tl.col="black", tl.pos = "lt")
+  
 }
 
 

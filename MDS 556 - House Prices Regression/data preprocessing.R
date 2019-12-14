@@ -40,11 +40,18 @@ data_cleaner <- function(data_raw){
                                       '2 FAMILY CONVERSION - ALL STYLES AND AGES'))
   
   
-  ggplot(data[!is.na(data_raw$SalePrice),], aes(x=as.factor(MSSubClass), y=SalePrice)) +
-    geom_bar(stat='summary', fun.y = "median", fill='blue')+
-    scale_y_continuous(breaks= seq(0, 800000, by=100000), labels = comma) +
-    geom_label(stat = "count", aes(label = ..count.., y = ..count..))
+    ggplot(data[!is.na(data$SalePrice),], aes(x=MSSubClass, y=SalePrice)) +
+    geom_bar(stat='summary', fun.y = "median", fill='blue') +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_y_continuous(breaks= seq(0, 800000, by=50000), labels = comma) +
+    geom_label(stat = "count", aes(label = ..count.., y = ..count..), size=3) +
+    geom_hline(yintercept=163000, linetype="dashed", color = "red") #dashed line is median SalePrice
   
+    ggplot(data=data, aes(x=MSSubClass)) +
+      geom_histogram(stat='count')+
+      geom_label(stat = "count", aes(label = ..count.., y = ..count..), size=3) +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+    
   ## 3 - FEATURE: MSZONING, turn to factor
   ## For now lets assume that C (all) is Commercial
   data_raw$MSZoning = factor(data$MSZoning,
