@@ -742,350 +742,6 @@
         <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
       </semantic-values>
     </datasource>
-    <datasource caption='week 5 gps responses with covid data' inline='true' name='federated.0alhkgj0g4yh3l17exde91e8wrax' version='18.1'>
-      <connection class='federated'>
-        <named-connections>
-          <named-connection caption='week 5 gps responses with covid data' name='textscan.0vfky781m23zoq11rwuos1byg9ok'>
-            <connection class='textscan' directory='C:/Users/cusey/OneDrive/Documents/GitHub/DataScienceCoursework/MDS 561 - 2020 Summer' filename='week 5 gps responses with covid data.csv' password='' server='' />
-          </named-connection>
-        </named-connections>
-        <relation connection='textscan.0vfky781m23zoq11rwuos1byg9ok' name='week 5 gps responses with covid data.csv' table='[week 5 gps responses with covid data#csv]' type='table'>
-          <columns character-set='UTF-8' header='yes' locale='en_US' separator=','>
-            <column datatype='integer' name='CASEID' ordinal='0' />
-            <column datatype='real' name='RESPONSE' ordinal='1' />
-            <column datatype='real' name='RESIDUAL' ordinal='2' />
-            <column datatype='integer' name='_DEATHS_PER_100K' ordinal='3' />
-            <column datatype='integer' name='BEACHES_PER_COUNTY' ordinal='4' />
-            <column datatype='real' name='_POP_PER_SQUARE_MILE' ordinal='5' />
-            <column datatype='real' name='___GDP_OF_STATE_GDP' ordinal='6' />
-            <column datatype='real' name='_POP_PERCENT_MALE' ordinal='7' />
-            <column datatype='real' name='_POP_TOT_WHITE' ordinal='8' />
-            <column datatype='real' name='_POP_TOT_BLACK' ordinal='9' />
-            <column datatype='real' name='_POP_TOT_AMERICAN_INDIAN' ordinal='10' />
-            <column datatype='real' name='_POP_TOT_ASAIN' ordinal='11' />
-            <column datatype='real' name='_POP_TOT_NATIVE_HAWAIIN_PI' ordinal='12' />
-            <column datatype='real' name='_POP_TOT_MIXED_RACE' ordinal='13' />
-            <column datatype='real' name='_POP_TOT_HISPANIC' ordinal='14' />
-            <column datatype='real' name='_POP___STATE_TOTAL' ordinal='15' />
-            <column datatype='real' name='_POP___BTWN_0_29' ordinal='16' />
-            <column datatype='real' name='_POP___BTWN_30_59' ordinal='17' />
-            <column datatype='real' name='_POP___BTWN_60_PLUS' ordinal='18' />
-            <column datatype='integer' name='DEATHS' ordinal='19' />
-            <column datatype='integer' name='_POSITIVES_PER_1OOK' ordinal='20' />
-            <column datatype='string' name='COUNTY' ordinal='21' />
-            <column datatype='integer' name='TPOSITIVE' ordinal='22' />
-          </columns>
-        </relation>
-        <metadata-records>
-          <metadata-record class='capability'>
-            <remote-name />
-            <remote-type>0</remote-type>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias />
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
-              <attribute datatype='string' name='collation'>&quot;en_US&quot;</attribute>
-              <attribute datatype='string' name='field-delimiter'>&quot;,&quot;</attribute>
-              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
-              <attribute datatype='string' name='locale'>&quot;en_US&quot;</attribute>
-              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>CASEID</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[CASEID]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>CASEID</remote-alias>
-            <ordinal>0</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>RESPONSE</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[RESPONSE]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>RESPONSE</remote-alias>
-            <ordinal>1</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>RESIDUAL</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[RESIDUAL]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>RESIDUAL</remote-alias>
-            <ordinal>2</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_DEATHS_PER_100K</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[_DEATHS_PER_100K]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_DEATHS_PER_100K</remote-alias>
-            <ordinal>3</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>BEACHES_PER_COUNTY</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[BEACHES_PER_COUNTY]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>BEACHES_PER_COUNTY</remote-alias>
-            <ordinal>4</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP_PER_SQUARE_MILE</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP_PER_SQUARE_MILE]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP_PER_SQUARE_MILE</remote-alias>
-            <ordinal>5</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>___GDP_OF_STATE_GDP</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[___GDP_OF_STATE_GDP]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>___GDP_OF_STATE_GDP</remote-alias>
-            <ordinal>6</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP_PERCENT_MALE</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP_PERCENT_MALE]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP_PERCENT_MALE</remote-alias>
-            <ordinal>7</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP_TOT_WHITE</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP_TOT_WHITE]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP_TOT_WHITE</remote-alias>
-            <ordinal>8</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP_TOT_BLACK</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP_TOT_BLACK]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP_TOT_BLACK</remote-alias>
-            <ordinal>9</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP_TOT_AMERICAN_INDIAN</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP_TOT_AMERICAN_INDIAN]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP_TOT_AMERICAN_INDIAN</remote-alias>
-            <ordinal>10</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP_TOT_ASAIN</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP_TOT_ASAIN]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP_TOT_ASAIN</remote-alias>
-            <ordinal>11</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP_TOT_NATIVE_HAWAIIN_PI</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP_TOT_NATIVE_HAWAIIN_PI]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP_TOT_NATIVE_HAWAIIN_PI</remote-alias>
-            <ordinal>12</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP_TOT_MIXED_RACE</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP_TOT_MIXED_RACE]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP_TOT_MIXED_RACE</remote-alias>
-            <ordinal>13</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP_TOT_HISPANIC</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP_TOT_HISPANIC]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP_TOT_HISPANIC</remote-alias>
-            <ordinal>14</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP___STATE_TOTAL</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP___STATE_TOTAL]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP___STATE_TOTAL</remote-alias>
-            <ordinal>15</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP___BTWN_0_29</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP___BTWN_0_29]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP___BTWN_0_29</remote-alias>
-            <ordinal>16</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP___BTWN_30_59</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP___BTWN_30_59]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP___BTWN_30_59</remote-alias>
-            <ordinal>17</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POP___BTWN_60_PLUS</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[_POP___BTWN_60_PLUS]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POP___BTWN_60_PLUS</remote-alias>
-            <ordinal>18</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>DEATHS</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[DEATHS]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>DEATHS</remote-alias>
-            <ordinal>19</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>_POSITIVES_PER_1OOK</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[_POSITIVES_PER_1OOK]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>_POSITIVES_PER_1OOK</remote-alias>
-            <ordinal>20</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>COUNTY</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[COUNTY]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>COUNTY</remote-alias>
-            <ordinal>21</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <scale>1</scale>
-            <width>1073741823</width>
-            <contains-null>true</contains-null>
-            <collation flag='0' name='LEN_RUS' />
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>TPOSITIVE</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[TPOSITIVE]</local-name>
-            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
-            <remote-alias>TPOSITIVE</remote-alias>
-            <ordinal>22</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-        </metadata-records>
-      </connection>
-      <aliases enabled='yes' />
-      <column caption='Beaches Per County' datatype='integer' name='[BEACHES_PER_COUNTY]' role='measure' type='quantitative' />
-      <column caption='Caseid' datatype='integer' name='[CASEID]' role='measure' type='quantitative' />
-      <column caption='County' datatype='string' name='[COUNTY]' role='dimension' semantic-role='[County].[Name]' type='nominal' />
-      <column caption='State' datatype='string' name='[Calculation_1968917465354125312]' role='dimension' semantic-role='[State].[Name]' type='nominal'>
-        <calculation class='tableau' formula='&quot;FL&quot;' />
-      </column>
-      <column caption='Deaths' datatype='integer' name='[DEATHS]' role='measure' type='quantitative' />
-      <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
-        <calculation class='tableau' formula='1' />
-      </column>
-      <column caption='Residual' datatype='real' name='[RESIDUAL]' role='measure' type='quantitative' />
-      <column caption='Response' datatype='real' name='[RESPONSE]' role='measure' type='quantitative' />
-      <column caption='Tpositive' datatype='integer' name='[TPOSITIVE]' role='measure' type='quantitative' />
-      <column caption='_deaths Per 100K' datatype='integer' name='[_DEATHS_PER_100K]' role='measure' type='quantitative' />
-      <column caption='_pop Percent Male' datatype='real' name='[_POP_PERCENT_MALE]' role='measure' type='quantitative' />
-      <column caption='_pop Per Square Mile' datatype='real' name='[_POP_PER_SQUARE_MILE]' role='measure' type='quantitative' />
-      <column caption='_pop Tot American Indian' datatype='real' name='[_POP_TOT_AMERICAN_INDIAN]' role='measure' type='quantitative' />
-      <column caption='_pop Tot Asain' datatype='real' name='[_POP_TOT_ASAIN]' role='measure' type='quantitative' />
-      <column caption='_pop Tot Black' datatype='real' name='[_POP_TOT_BLACK]' role='measure' type='quantitative' />
-      <column caption='_pop Tot Hispanic' datatype='real' name='[_POP_TOT_HISPANIC]' role='measure' type='quantitative' />
-      <column caption='_pop Tot Mixed Race' datatype='real' name='[_POP_TOT_MIXED_RACE]' role='measure' type='quantitative' />
-      <column caption='_pop Tot Native Hawaiin Pi' datatype='real' name='[_POP_TOT_NATIVE_HAWAIIN_PI]' role='measure' type='quantitative' />
-      <column caption='_pop Tot White' datatype='real' name='[_POP_TOT_WHITE]' role='measure' type='quantitative' />
-      <column caption='_pop___Btwn_0_29' datatype='real' name='[_POP___BTWN_0_29]' role='measure' type='quantitative' />
-      <column caption='_pop___Btwn_30_59' datatype='real' name='[_POP___BTWN_30_59]' role='measure' type='quantitative' />
-      <column caption='_pop___Btwn_60_Plus' datatype='real' name='[_POP___BTWN_60_PLUS]' role='measure' type='quantitative' />
-      <column caption='_pop___State_Total' datatype='real' name='[_POP___STATE_TOTAL]' role='measure' type='quantitative' />
-      <column caption='_positives Per 1Ook' datatype='integer' name='[_POSITIVES_PER_1OOK]' role='measure' type='quantitative' />
-      <column caption='___Gdp_Of_State_Gdp' datatype='real' name='[___GDP_OF_STATE_GDP]' role='measure' type='quantitative' />
-      <layout dim-ordering='alphabetic' dim-percentage='0.163842' measure-ordering='alphabetic' measure-percentage='0.836158' show-structure='true' user-set-layout='true' />
-      <semantic-values>
-        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
-      </semantic-values>
-    </datasource>
     <datasource caption='Best Deaths Per 100K Regression Model 3' inline='true' name='federated.180drau1xxprja11c2ifr1tgee55' version='18.1'>
       <connection class='federated'>
         <named-connections>
@@ -1482,10 +1138,10 @@
       <connection class='federated'>
         <named-connections>
           <named-connection caption='Best Deaths Per 100K Regression Model 4' name='textscan.17c43861irroy31gbg02e1vbf4d7'>
-            <connection class='textscan' directory='C:/Users/cusey/OneDrive/Documents/GitHub/DataScienceProjects/MDS 561' filename='Best Deaths Per 100K Regression Model 4.csv' password='' server='' />
+            <connection class='textscan' directory='C:/Users/cusey/OneDrive/Documents/GitHub/DataScienceProjects/MDS 561' filename='Best Deaths Per 100K Regression Model v2.csv' password='' server='' />
           </named-connection>
         </named-connections>
-        <relation connection='textscan.17c43861irroy31gbg02e1vbf4d7' name='Best Deaths Per 100K Regression Model 4.csv' table='[Best Deaths Per 100K Regression Model 4#csv]' type='table'>
+        <relation connection='textscan.17c43861irroy31gbg02e1vbf4d7' name='Best Deaths Per 100K Regression Model v2.csv' table='[Best Deaths Per 100K Regression Model v2#csv]' type='table'>
           <columns character-set='UTF-8' header='yes' locale='en_US' separator=','>
             <column datatype='integer' name='CASEID' ordinal='0' />
             <column datatype='real' name='RESPONSE' ordinal='1' />
@@ -1516,7 +1172,7 @@
           <metadata-record class='capability'>
             <remote-name />
             <remote-type>0</remote-type>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias />
             <aggregation>Count</aggregation>
             <contains-null>true</contains-null>
@@ -1533,7 +1189,7 @@
             <remote-name>CASEID</remote-name>
             <remote-type>20</remote-type>
             <local-name>[CASEID]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>CASEID</remote-alias>
             <ordinal>0</ordinal>
             <local-type>integer</local-type>
@@ -1544,7 +1200,7 @@
             <remote-name>RESPONSE</remote-name>
             <remote-type>5</remote-type>
             <local-name>[RESPONSE]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>RESPONSE</remote-alias>
             <ordinal>1</ordinal>
             <local-type>real</local-type>
@@ -1555,7 +1211,7 @@
             <remote-name>RESIDUAL</remote-name>
             <remote-type>5</remote-type>
             <local-name>[RESIDUAL]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>RESIDUAL</remote-alias>
             <ordinal>2</ordinal>
             <local-type>real</local-type>
@@ -1566,7 +1222,7 @@
             <remote-name>_DEATHS_PER_100K</remote-name>
             <remote-type>20</remote-type>
             <local-name>[_DEATHS_PER_100K]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_DEATHS_PER_100K</remote-alias>
             <ordinal>3</ordinal>
             <local-type>integer</local-type>
@@ -1577,7 +1233,7 @@
             <remote-name>BEACHES_PER_COUNTY</remote-name>
             <remote-type>20</remote-type>
             <local-name>[BEACHES_PER_COUNTY]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>BEACHES_PER_COUNTY</remote-alias>
             <ordinal>4</ordinal>
             <local-type>integer</local-type>
@@ -1588,7 +1244,7 @@
             <remote-name>_POP_PER_SQUARE_MILE</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP_PER_SQUARE_MILE]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP_PER_SQUARE_MILE</remote-alias>
             <ordinal>5</ordinal>
             <local-type>real</local-type>
@@ -1599,7 +1255,7 @@
             <remote-name>___GDP_OF_STATE_GDP</remote-name>
             <remote-type>5</remote-type>
             <local-name>[___GDP_OF_STATE_GDP]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>___GDP_OF_STATE_GDP</remote-alias>
             <ordinal>6</ordinal>
             <local-type>real</local-type>
@@ -1610,7 +1266,7 @@
             <remote-name>_POP_PERCENT_MALE</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP_PERCENT_MALE]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP_PERCENT_MALE</remote-alias>
             <ordinal>7</ordinal>
             <local-type>real</local-type>
@@ -1621,7 +1277,7 @@
             <remote-name>_POP_TOT_WHITE</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP_TOT_WHITE]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP_TOT_WHITE</remote-alias>
             <ordinal>8</ordinal>
             <local-type>real</local-type>
@@ -1632,7 +1288,7 @@
             <remote-name>_POP_TOT_BLACK</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP_TOT_BLACK]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP_TOT_BLACK</remote-alias>
             <ordinal>9</ordinal>
             <local-type>real</local-type>
@@ -1643,7 +1299,7 @@
             <remote-name>_POP_TOT_AMERICAN_INDIAN</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP_TOT_AMERICAN_INDIAN]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP_TOT_AMERICAN_INDIAN</remote-alias>
             <ordinal>10</ordinal>
             <local-type>real</local-type>
@@ -1654,7 +1310,7 @@
             <remote-name>_POP_TOT_ASAIN</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP_TOT_ASAIN]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP_TOT_ASAIN</remote-alias>
             <ordinal>11</ordinal>
             <local-type>real</local-type>
@@ -1665,7 +1321,7 @@
             <remote-name>_POP_TOT_NATIVE_HAWAIIN_PI</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP_TOT_NATIVE_HAWAIIN_PI]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP_TOT_NATIVE_HAWAIIN_PI</remote-alias>
             <ordinal>12</ordinal>
             <local-type>real</local-type>
@@ -1676,7 +1332,7 @@
             <remote-name>_POP_TOT_MIXED_RACE</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP_TOT_MIXED_RACE]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP_TOT_MIXED_RACE</remote-alias>
             <ordinal>13</ordinal>
             <local-type>real</local-type>
@@ -1687,7 +1343,7 @@
             <remote-name>_POP_TOT_HISPANIC</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP_TOT_HISPANIC]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP_TOT_HISPANIC</remote-alias>
             <ordinal>14</ordinal>
             <local-type>real</local-type>
@@ -1698,7 +1354,7 @@
             <remote-name>_POP___STATE_TOTAL</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP___STATE_TOTAL]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP___STATE_TOTAL</remote-alias>
             <ordinal>15</ordinal>
             <local-type>real</local-type>
@@ -1709,7 +1365,7 @@
             <remote-name>_POP___BTWN_0_29</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP___BTWN_0_29]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP___BTWN_0_29</remote-alias>
             <ordinal>16</ordinal>
             <local-type>real</local-type>
@@ -1720,7 +1376,7 @@
             <remote-name>_POP___BTWN_30_59</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP___BTWN_30_59]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP___BTWN_30_59</remote-alias>
             <ordinal>17</ordinal>
             <local-type>real</local-type>
@@ -1731,7 +1387,7 @@
             <remote-name>_POP___BTWN_60_PLUS</remote-name>
             <remote-type>5</remote-type>
             <local-name>[_POP___BTWN_60_PLUS]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POP___BTWN_60_PLUS</remote-alias>
             <ordinal>18</ordinal>
             <local-type>real</local-type>
@@ -1742,7 +1398,7 @@
             <remote-name>DEATHS</remote-name>
             <remote-type>20</remote-type>
             <local-name>[DEATHS]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>DEATHS</remote-alias>
             <ordinal>19</ordinal>
             <local-type>integer</local-type>
@@ -1753,7 +1409,7 @@
             <remote-name>_POSITIVES_PER_1OOK</remote-name>
             <remote-type>20</remote-type>
             <local-name>[_POSITIVES_PER_1OOK]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>_POSITIVES_PER_1OOK</remote-alias>
             <ordinal>20</ordinal>
             <local-type>integer</local-type>
@@ -1764,7 +1420,7 @@
             <remote-name>COUNTY</remote-name>
             <remote-type>129</remote-type>
             <local-name>[COUNTY]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>COUNTY</remote-alias>
             <ordinal>21</ordinal>
             <local-type>string</local-type>
@@ -1778,7 +1434,7 @@
             <remote-name>TPOSITIVE</remote-name>
             <remote-type>20</remote-type>
             <local-name>[TPOSITIVE]</local-name>
-            <parent-name>[Best Deaths Per 100K Regression Model 4.csv]</parent-name>
+            <parent-name>[Best Deaths Per 100K Regression Model v2.csv]</parent-name>
             <remote-alias>TPOSITIVE</remote-alias>
             <ordinal>22</ordinal>
             <local-type>integer</local-type>
@@ -1789,7 +1445,6 @@
       </connection>
       <aliases enabled='yes' />
       <column caption='Beaches Per County' datatype='integer' name='[BEACHES_PER_COUNTY]' role='measure' type='quantitative' />
-      <column caption='Caseid' datatype='integer' name='[CASEID]' role='measure' type='quantitative' />
       <column caption='County' datatype='string' name='[COUNTY]' role='dimension' semantic-role='[County].[Name]' type='nominal' />
       <column caption='T_Constant' datatype='real' name='[Calculation_2446017551055061009]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='-165.84804' />
@@ -1839,6 +1494,346 @@
       <column caption='T_Pop 60 Plus' datatype='real' name='[Calculation_2446017551058817056]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='1.93989  * [_POP___BTWN_60_PLUS]' />
       </column>
+      <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
+        <calculation class='tableau' formula='1' />
+      </column>
+      <column caption='Response' datatype='real' name='[RESPONSE]' role='measure' type='quantitative' />
+      <column caption='_pop Percent Male' datatype='real' name='[_POP_PERCENT_MALE]' role='measure' type='quantitative' />
+      <column caption='_pop Per Square Mile' datatype='real' name='[_POP_PER_SQUARE_MILE]' role='measure' type='quantitative' />
+      <column caption='_pop Tot American Indian' datatype='real' name='[_POP_TOT_AMERICAN_INDIAN]' role='measure' type='quantitative' />
+      <column caption='_pop Tot Asain' datatype='real' name='[_POP_TOT_ASAIN]' role='measure' type='quantitative' />
+      <column caption='_pop Tot Black' datatype='real' name='[_POP_TOT_BLACK]' role='measure' type='quantitative' />
+      <column caption='_pop Tot Hispanic' datatype='real' name='[_POP_TOT_HISPANIC]' role='measure' type='quantitative' />
+      <column caption='_pop Tot Mixed Race' datatype='real' name='[_POP_TOT_MIXED_RACE]' role='measure' type='quantitative' />
+      <column caption='_pop Tot Native Hawaiin Pi' datatype='real' name='[_POP_TOT_NATIVE_HAWAIIN_PI]' role='measure' type='quantitative' />
+      <column caption='_pop Tot White' datatype='real' name='[_POP_TOT_WHITE]' role='measure' type='quantitative' />
+      <column caption='_pop___Btwn_0_29' datatype='real' name='[_POP___BTWN_0_29]' role='measure' type='quantitative' />
+      <column caption='_pop___Btwn_30_59' datatype='real' name='[_POP___BTWN_30_59]' role='measure' type='quantitative' />
+      <column caption='_pop___Btwn_60_Plus' datatype='real' name='[_POP___BTWN_60_PLUS]' role='measure' type='quantitative' />
+      <column caption='_pop___State_Total' datatype='real' name='[_POP___STATE_TOTAL]' role='measure' type='quantitative' />
+      <column caption='_positives Per 1Ook' datatype='integer' name='[_POSITIVES_PER_1OOK]' role='measure' type='quantitative' />
+      <column caption='___Gdp_Of_State_Gdp' datatype='real' name='[___GDP_OF_STATE_GDP]' role='measure' type='quantitative' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.116761' measure-ordering='alphabetic' measure-percentage='0.883239' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+    </datasource>
+    <datasource caption='week 5 gps responses with covid data' inline='true' name='federated.0alhkgj0g4yh3l17exde91e8wrax' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='week 5 gps responses with covid data' name='textscan.0vfky781m23zoq11rwuos1byg9ok'>
+            <connection class='textscan' directory='C:/Users/cusey/OneDrive/Documents/GitHub/DataScienceCoursework/MDS 561 - 2020 Summer' filename='week 5 gps responses with covid data.csv' password='' server='' />
+          </named-connection>
+        </named-connections>
+        <relation connection='textscan.0vfky781m23zoq11rwuos1byg9ok' name='week 5 gps responses with covid data.csv' table='[week 5 gps responses with covid data#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='en_US' separator=','>
+            <column datatype='integer' name='CASEID' ordinal='0' />
+            <column datatype='real' name='RESPONSE' ordinal='1' />
+            <column datatype='real' name='RESIDUAL' ordinal='2' />
+            <column datatype='integer' name='_DEATHS_PER_100K' ordinal='3' />
+            <column datatype='integer' name='BEACHES_PER_COUNTY' ordinal='4' />
+            <column datatype='real' name='_POP_PER_SQUARE_MILE' ordinal='5' />
+            <column datatype='real' name='___GDP_OF_STATE_GDP' ordinal='6' />
+            <column datatype='real' name='_POP_PERCENT_MALE' ordinal='7' />
+            <column datatype='real' name='_POP_TOT_WHITE' ordinal='8' />
+            <column datatype='real' name='_POP_TOT_BLACK' ordinal='9' />
+            <column datatype='real' name='_POP_TOT_AMERICAN_INDIAN' ordinal='10' />
+            <column datatype='real' name='_POP_TOT_ASAIN' ordinal='11' />
+            <column datatype='real' name='_POP_TOT_NATIVE_HAWAIIN_PI' ordinal='12' />
+            <column datatype='real' name='_POP_TOT_MIXED_RACE' ordinal='13' />
+            <column datatype='real' name='_POP_TOT_HISPANIC' ordinal='14' />
+            <column datatype='real' name='_POP___STATE_TOTAL' ordinal='15' />
+            <column datatype='real' name='_POP___BTWN_0_29' ordinal='16' />
+            <column datatype='real' name='_POP___BTWN_30_59' ordinal='17' />
+            <column datatype='real' name='_POP___BTWN_60_PLUS' ordinal='18' />
+            <column datatype='integer' name='DEATHS' ordinal='19' />
+            <column datatype='integer' name='_POSITIVES_PER_1OOK' ordinal='20' />
+            <column datatype='string' name='COUNTY' ordinal='21' />
+            <column datatype='integer' name='TPOSITIVE' ordinal='22' />
+          </columns>
+        </relation>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
+              <attribute datatype='string' name='collation'>&quot;en_US&quot;</attribute>
+              <attribute datatype='string' name='field-delimiter'>&quot;,&quot;</attribute>
+              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
+              <attribute datatype='string' name='locale'>&quot;en_US&quot;</attribute>
+              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>CASEID</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[CASEID]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>CASEID</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>RESPONSE</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[RESPONSE]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>RESPONSE</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>RESIDUAL</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[RESIDUAL]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>RESIDUAL</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_DEATHS_PER_100K</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[_DEATHS_PER_100K]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_DEATHS_PER_100K</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>BEACHES_PER_COUNTY</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[BEACHES_PER_COUNTY]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>BEACHES_PER_COUNTY</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP_PER_SQUARE_MILE</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP_PER_SQUARE_MILE]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP_PER_SQUARE_MILE</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>___GDP_OF_STATE_GDP</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[___GDP_OF_STATE_GDP]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>___GDP_OF_STATE_GDP</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP_PERCENT_MALE</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP_PERCENT_MALE]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP_PERCENT_MALE</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP_TOT_WHITE</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP_TOT_WHITE]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP_TOT_WHITE</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP_TOT_BLACK</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP_TOT_BLACK]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP_TOT_BLACK</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP_TOT_AMERICAN_INDIAN</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP_TOT_AMERICAN_INDIAN]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP_TOT_AMERICAN_INDIAN</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP_TOT_ASAIN</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP_TOT_ASAIN]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP_TOT_ASAIN</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP_TOT_NATIVE_HAWAIIN_PI</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP_TOT_NATIVE_HAWAIIN_PI]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP_TOT_NATIVE_HAWAIIN_PI</remote-alias>
+            <ordinal>12</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP_TOT_MIXED_RACE</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP_TOT_MIXED_RACE]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP_TOT_MIXED_RACE</remote-alias>
+            <ordinal>13</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP_TOT_HISPANIC</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP_TOT_HISPANIC]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP_TOT_HISPANIC</remote-alias>
+            <ordinal>14</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP___STATE_TOTAL</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP___STATE_TOTAL]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP___STATE_TOTAL</remote-alias>
+            <ordinal>15</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP___BTWN_0_29</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP___BTWN_0_29]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP___BTWN_0_29</remote-alias>
+            <ordinal>16</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP___BTWN_30_59</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP___BTWN_30_59]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP___BTWN_30_59</remote-alias>
+            <ordinal>17</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POP___BTWN_60_PLUS</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[_POP___BTWN_60_PLUS]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POP___BTWN_60_PLUS</remote-alias>
+            <ordinal>18</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>DEATHS</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[DEATHS]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>DEATHS</remote-alias>
+            <ordinal>19</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>_POSITIVES_PER_1OOK</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[_POSITIVES_PER_1OOK]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>_POSITIVES_PER_1OOK</remote-alias>
+            <ordinal>20</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>COUNTY</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[COUNTY]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>COUNTY</remote-alias>
+            <ordinal>21</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>TPOSITIVE</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[TPOSITIVE]</local-name>
+            <parent-name>[week 5 gps responses with covid data.csv]</parent-name>
+            <remote-alias>TPOSITIVE</remote-alias>
+            <ordinal>22</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Beaches Per County' datatype='integer' name='[BEACHES_PER_COUNTY]' role='measure' type='quantitative' />
+      <column caption='Caseid' datatype='integer' name='[CASEID]' role='measure' type='quantitative' />
+      <column caption='County' datatype='string' name='[COUNTY]' role='dimension' semantic-role='[County].[Name]' type='nominal' />
+      <column caption='State' datatype='string' name='[Calculation_1968917465354125312]' role='dimension' semantic-role='[State].[Name]' type='nominal'>
+        <calculation class='tableau' formula='&quot;FL&quot;' />
+      </column>
       <column caption='Deaths' datatype='integer' name='[DEATHS]' role='measure' type='quantitative' />
       <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
         <calculation class='tableau' formula='1' />
@@ -1862,7 +1857,7 @@
       <column caption='_pop___State_Total' datatype='real' name='[_POP___STATE_TOTAL]' role='measure' type='quantitative' />
       <column caption='_positives Per 1Ook' datatype='integer' name='[_POSITIVES_PER_1OOK]' role='measure' type='quantitative' />
       <column caption='___Gdp_Of_State_Gdp' datatype='real' name='[___GDP_OF_STATE_GDP]' role='measure' type='quantitative' />
-      <layout dim-ordering='alphabetic' dim-percentage='0.116761' measure-ordering='alphabetic' measure-percentage='0.883239' show-structure='true' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.163842' measure-ordering='alphabetic' measure-percentage='0.836158' show-structure='true' user-set-layout='true' />
       <semantic-values>
         <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
       </semantic-values>
@@ -2224,8 +2219,10 @@
           </datasources>
           <datasource-dependencies datasource='federated.0alhkgj0g4yh3l17exde91e8wrax'>
             <column caption='County' datatype='string' name='[COUNTY]' role='dimension' semantic-role='[County].[Name]' type='nominal' />
+            <column caption='_deaths Per 100K' datatype='integer' name='[_DEATHS_PER_100K]' role='measure' type='quantitative' />
             <column caption='___Gdp_Of_State_Gdp' datatype='real' name='[___GDP_OF_STATE_GDP]' role='measure' type='quantitative' />
             <column-instance column='[COUNTY]' derivation='None' name='[none:COUNTY:nk]' pivot='key' type='nominal' />
+            <column-instance column='[_DEATHS_PER_100K]' derivation='Sum' name='[sum:_DEATHS_PER_100K:qk]' pivot='key' type='quantitative' />
             <column-instance column='[___GDP_OF_STATE_GDP]' derivation='Sum' name='[sum:___GDP_OF_STATE_GDP:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
@@ -2239,7 +2236,7 @@
             <mark class='Automatic' />
             <encodings>
               <size column='[federated.0alhkgj0g4yh3l17exde91e8wrax].[sum:___GDP_OF_STATE_GDP:qk]' />
-              <color column='[federated.0alhkgj0g4yh3l17exde91e8wrax].[sum:___GDP_OF_STATE_GDP:qk]' />
+              <color column='[federated.0alhkgj0g4yh3l17exde91e8wrax].[sum:_DEATHS_PER_100K:qk]' />
               <text column='[federated.0alhkgj0g4yh3l17exde91e8wrax].[none:COUNTY:nk]' />
             </encodings>
             <style>
@@ -2563,10 +2560,10 @@
       </viewpoint>
       <simple-id uuid='{9BEFD759-7200-488F-A9CD-50598C337ECB}' />
     </window>
-    <window class='worksheet' name='GDP Tree Map'>
+    <window class='worksheet' maximized='true' name='GDP Tree Map'>
       <cards>
         <edge name='left'>
-          <strip size='160'>
+          <strip size='206'>
             <card type='pages' />
             <card type='filters' />
             <card type='marks' />
@@ -2585,7 +2582,7 @@
         </edge>
         <edge name='right'>
           <strip size='160'>
-            <card pane-specification-id='0' param='[federated.0alhkgj0g4yh3l17exde91e8wrax].[sum:___GDP_OF_STATE_GDP:qk]' type='color' />
+            <card pane-specification-id='0' param='[federated.0alhkgj0g4yh3l17exde91e8wrax].[sum:_DEATHS_PER_100K:qk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -2593,12 +2590,13 @@
         <highlight>
           <color-one-way>
             <field>[federated.0alhkgj0g4yh3l17exde91e8wrax].[none:COUNTY:nk]</field>
+            <field>[federated.0alhkgj0g4yh3l17exde91e8wrax].[sum:_DEATHS_PER_100K:qk]</field>
           </color-one-way>
         </highlight>
       </viewpoint>
       <simple-id uuid='{FDEC60F3-0049-4827-939B-5856C04269C2}' />
     </window>
-    <window class='worksheet' maximized='true' name='Death Per 100K 2'>
+    <window class='worksheet' name='Death Per 100K 2'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -3971,76 +3969,85 @@
     </thumbnail>
     <thumbnail height='192' name='GDP Tree Map' width='192'>
       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
-      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
-      8RhC1QAAAABJRU5ErkJggg==
+      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
     </thumbnail>
     <thumbnail height='192' name='GPS Scatter Plot' width='192'>
       iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAABYlAAAWJQFJUiTw
@@ -4219,180 +4226,178 @@
     </thumbnail>
     <thumbnail height='192' name='Geographical Info' width='192'>
       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
-      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
+      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
+      a4QABLHm/wEfg5QFtuRrnQAAAABJRU5ErkJggg==
     </thumbnail>
     <thumbnail height='192' name='RF Scatter Plot' width='192'>
       iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAABYlAAAWJQFJUiTw
