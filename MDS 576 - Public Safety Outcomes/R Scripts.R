@@ -1,0 +1,153 @@
+##check.for.updates.R() 
+##install.R()
+##rm(list = ls())
+setwd('~/GitHub/DataScienceProjects/MDS 576 - Public Safety Outcomes')
+
+library(purrr)
+library(tidyr)
+library(ggplot2)
+library(corrplot)
+data <- read.csv(file='Combined Model Data 3.csv', header=TRUE, stringsAsFactors = TRUE)
+data
+
+numeric_variables <- which(sapply(data, is.numeric)) #index vector numeric variables
+numeric_variables <- numeric_variables[-1] ## Remove Year Column
+
+## Crime Related Features
+crime_features <- c("Total.Index.Crime.Rates.per.100K",
+                    "HTIS.per.100K",
+                    "HTS.Per.100K",
+                    "Arson.per.100K",
+                    "Battery.Assault.Per.100K",
+                    "MVT.Per.100K",
+                    "Theft.per.100K",
+                    "Robbery.Per.100K",
+                    "Burglary.per.100K",
+                    "Homocides.Per.100k")
+
+drug_features <- c("Prop.of.Meth.Arrests.Per.100K",
+                   "Prop.Needle.Syringe.Arrests.per.100K",
+                   "Prop.Controlled.Substance.Arrests.per.100K",
+                   "Prop.Cannabis.Arrests.Per.100K",
+                   "Prop.of.Paraphernalia.Drug.Arrests.per.100K")
+
+population_features <- c("Population",
+                         "Percent.Hispanic.Female",
+                         "Percent.Hispanic.Male",
+                         "Percent.Two.or.More.Races.Female",
+                         "Percent.Two.or.More.Races.Male",
+                         "Percent.Native.Hawaiin.Female",
+                         "Percent.Native.Hawaiin.Male",
+                         "Percent.Asain.Female",
+                         "Percent.Asain.Male",
+                         "Percent.American.Indian.Female",
+                         "Percent.American.Indian.Male",
+                         "Percent.Black.Female",
+                         "Percent.Black.Male",
+                         "Percent.White.Male",
+                         "Percent.White.Female",
+                         "Population.Percent.Male")
+
+economic_features_1 <- c("Unemployment.Rate",
+                       "Normalize.2018.GDP",
+                       "Prop.No.Earners",
+                       "Prop.1.Earner",
+                       "Prop.2.Earner",
+                       "Prop.3.Earner",
+                       "Prop.Male.Poverty",
+                       "Prop.Male.Poverty.Under.17",
+                       "Prop.Male.Poverty.18.24",
+                       "Prop.Male.Poverty.25.34",
+                       "Prop.Male.Poverty.35.44",
+                       "Prop.Male.Poverty.45.54",
+                       "Prop.Male.Poverty.55.64",
+                       "Prop.Male.Poverty.65.74",
+                       "Prop.Male.Poveryy.75.")
+
+economic_features_2 <- c("Prop.Female.Poverty",
+                         "Prop.Female.17.and.Under",
+                         "Prop.Female.Poverty.18.24",
+                         "Prop.Female.Poverty.25.34",
+                         "Prop.Female.Poverty.35.44",
+                         "Prop.Female.Poverty.45.54",
+                         "Prop.Female.Poverty.55.64",
+                         "Prop.Female.Poverty.65.74",
+                         "Prop.Female.Poverty.75.")
+
+family_features <- c("Prop.Female.household.no.Children",
+                     "Prop.Female.Household.with.Children.under.18",
+                     "Prop.Female.Household",
+                     "Prop.Male.Household.No.Children",
+                     "Prop.Male.Household.with.children.under.6",
+                     "Prop.Male.Household.with.children.under.18",
+                     "Prop.Male.Household",
+                     "Prop.Other.Family.Type..Not.Married.",
+                     "Prop.Married.no.children.under.18",
+                     "Prop.Married.with.children.under.6",
+                     "Prop.Married.with.Children.under.18",
+                     "Prop.Married.Couple.Family")
+
+## Distribution plots for all crime features
+data[crime_features] %>%
+  keep(is.numeric) %>% 
+  gather() %>%
+  ggplot(aes(value)) +
+  facet_wrap(~ key, scales="free") +
+  geom_histogram() + 
+  ylab("Frequency") + 
+  xlab("Features") +
+  ggtitle("Distribution")
+
+## Distribution plots for all drug features
+data[drug_features] %>%
+  keep(is.numeric) %>% 
+  gather() %>%
+  ggplot(aes(value)) +
+  facet_wrap(~ key, scales="free") +
+  geom_histogram() + 
+  ylab("Frequency") + 
+  xlab("Features") +
+  ggtitle("Distribution")
+
+## Distribution plots for all economic features
+data[economic_features_1] %>%
+  keep(is.numeric) %>% 
+  gather() %>%
+  ggplot(aes(value)) +
+  facet_wrap(~ key, scales="free") +
+  geom_histogram() + 
+  ylab("Frequency") + 
+  xlab("Features") +
+  ggtitle("Distribution")
+
+## Distribution plots for all economic features
+data[economic_features_2] %>%
+  keep(is.numeric) %>% 
+  gather() %>%
+  ggplot(aes(value)) +
+  facet_wrap(~ key, scales="free") +
+  geom_histogram() + 
+  ylab("Frequency") + 
+  xlab("Features") +
+  ggtitle("Distribution")
+
+## Distribution plots for all economic features
+data[family_features] %>%
+  keep(is.numeric) %>% 
+  gather() %>%
+  ggplot(aes(value)) +
+  facet_wrap(~ key, scales="free") +
+  geom_histogram() + 
+  ylab("Frequency") + 
+  xlab("Features") +
+  ggtitle("Distribution")
+
+names(numeric_variables)
+cor_numVar <- cor(data[,numeric_variables], use="pairwise.complete.obs") #correlations of all numeric variables
+#cor_sorted <- as.matrix(sort(cor_numVar[,'Total.Index.Crime.Rates.per.100K'], decreasing = TRUE))
+#select only high correlations
+#CorHigh <- names(which(apply(cor_sorted, 1, function(x) abs(x)>0.5)))
+#cor_numVar <- cor_numVar[CorHigh, CorHigh]
+#cor_numVar <- data.frame(cor_numVar)
+cor_numVar
+write.csv(cor_numVar, 'correlations 2.csv')

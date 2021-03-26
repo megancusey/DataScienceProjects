@@ -1,0 +1,20 @@
+DROP:
+Percent.Two.or.More.Races.Female - correlation
+Percent.White.Female - correlation
+Percent.American.Indian.Female
+Percent.Asain.Female
+Percent.Native.Hawaiin.Female
+Percent Hispanic Female
+Percent Female
+Prop.Other.Family.Type..Not.Married.
+Population
+
+MVT.Per.100K - target leakage
+Theft.per.100K - target leakage
+Burglary.per.100K - target leakage
+Robbery.Per.100K - target leakage
+Homocides.Per.100k - target leakage
+HTIS per 100K
+HTS per 100K
+Battery Per 100K
+Sexual Assault Per 100K
